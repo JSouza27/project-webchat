@@ -1,5 +1,5 @@
 const moment = require('moment');
-const Model = require('../models/chatModel');
+const Model = require('../public/models/chatModel');
 
 const users = [];
 
@@ -15,10 +15,10 @@ const updateUser = (obj) => {
 };
 
 const message = (chatMessage, nickname) => ({
-    message: `${moment().format('DD-MM-YYYY HH:mm:ss')} ${nickname}: ${chatMessage}`,
-    nickname,
-    timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
-  });
+  message: `${moment().format('DD-MM-YYYY HH:mm:ss')} ${nickname}: ${chatMessage}`,
+  nickname,
+  timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+});
 
 const NEW_CONNETION = 'new-connection';
 

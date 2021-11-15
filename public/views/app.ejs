@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../css/tailwind.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Project-Web Chat</title>
+</head>
+<body>
+  <div id="root" class="flex bg-white">
+    <section class="flex flex-col justify-between border-r-2 h-screen">
+      <section id="user-box" class="p-6 text-gray-700 text-sm"></section>
+      <div class="h-28 border-t-2 p-6">
+        <form id="form-nickname" class="flex flex-col justify-items-center">
+          <div class="mb-2">
+            <span class="font-semibold text-gray-700 text-base">Edite seu nickname</span>
+          </div>
+          <div class="flex">
+            <input
+              data-testid="nickname-box"
+              id="input-nickname"
+              type="text"
+              placeholder="Insira seu nickname"
+              class="border-2 border-gray-300 outline-none py-2 px-3 rounded-lg text-sm text-gray-500"
+            />
+            <button
+              data-testid="nickname-button"
+              class="bg-indigo-400 ml-3 outline-none rounded-lg text-white w-11"
+            >
+            <i class="large material-icons">edit</i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section>
+      <div id="message-container">
+        <% oldMessages.forEach(({ message }) => {%>
+          <span data-testid="message"><%= message %></span>
+        <%})%>
+      </div>
+      <form id="form-message">
+        <input data-testid="message-box" id="input-message" type="text" placeholder="Digite uma nova menssagem aqui" /><button data-testid="send-button">Enviar</button>
+      </form>
+    </section>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/chat.js"></script>
+</body>
+</html>

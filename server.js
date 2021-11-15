@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const Model = require('./models/chatModel');
+const Model = require('./public/models/chatModel');
 
 require('dotenv').config();
 
@@ -25,11 +25,11 @@ const io = new Server(httpServer, {
 require('./socket/socket')(io);
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', './public/views');
 
 app.use(cors());
 
-app.get('/', async (req, res) => {
+app.get('/', async (_req, res) => {
   const messages = await Model.getMessage();
   return res.render('app.ejs', { oldMessages: messages });
 });
