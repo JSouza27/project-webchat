@@ -1,0 +1,27 @@
+.conatiner-msg {
+  animation: floatup 0.5s forwards;
+}
+
+.message-space::-webkit-scrollbar {
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 6px;
+  width: 0.75em;
+}
+
+.message-space::-webkit-scrollbar-thumb {
+  background-color: rgb(85, 99, 229);
+  border-radius: 6px;
+}
+
+@keyframes floatup {
+
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

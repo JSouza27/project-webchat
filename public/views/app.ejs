@@ -5,49 +5,74 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../css/tailwind.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>Project-Web Chat</title>
 </head>
 <body>
   <div id="root" class="flex bg-white">
-    <section class="flex flex-col justify-between border-r-2 h-screen">
-      <section id="user-box" class="p-6 text-gray-700 text-sm"></section>
-      <div class="h-28 border-t-2 p-6">
-        <form id="form-nickname" class="flex flex-col justify-items-center">
-          <div class="mb-2">
-            <span class="font-semibold text-gray-700 text-base">Edite seu nickname</span>
+    <section class="flex flex-col border-r-2 h-screen">
+      <div class="flex border-b-2 h-24 p-6">
+        <form id="form-nickname" class="flex flex-col justify-center">
+          <div class="flex items-center mb-2">
+            <span class="font-semibold text-gray-500 text-base">Usuários</span>
           </div>
           <div class="flex">
             <input
               data-testid="nickname-box"
               id="input-nickname"
               type="text"
-              placeholder="Insira seu nickname"
+              placeholder="Edite seu nickname"
               class="border-2 border-gray-300 outline-none py-2 px-3 rounded-lg text-sm text-gray-500"
             />
             <button
               data-testid="nickname-button"
-              class="bg-indigo-400 ml-3 outline-none rounded-lg text-white w-11"
+              class="bg-gray-100 bg-white h-11 ml-3 outline-none rounded-lg text-indigo-600 w-11"
             >
-            <i class="large material-icons">edit</i>
+            <i class="tiny material-icons">edit</i>
             </button>
           </div>
         </form>
       </div>
+
+      <div id="user-box" class="p-6 text-gray-700 text-sm"></div>
     </section>
 
-    <section>
-      <div id="message-container">
-        <% oldMessages.forEach(({ message }) => {%>
-          <span data-testid="message"><%= message %></span>
+    <section class="flex flex-col justify-around h-screen items-center mx-8 w-screen">
+      <div id="message-container" class="message-space my-4 overflow-x-auto h-full w-full">
+        <% oldMessages.forEach(({ message, nickname }) => {%>
+          <div class="flex">
+            <div class="avatar flex bg-gray-300 font-semibold
+            h-10 items-center justify-center mr-2 rounded-full text-base text-indigo-600 w-10">
+              <span class="font-semibold text-base"><%= nickname.slice(0, 1).toUpperCase() %></span>
+            </div>
+            <div class="bg-gray-100 border mt-2 ml-2 mb-4 py-2.5 px-3.5 rounded-bl-lg rounded-tr-lg rounded-br-lg shadow-md w-80">
+              <span data-testid="message"><%= message %></span>
+            </div>
+          </div>
         <%})%>
       </div>
-      <form id="form-message">
-        <input data-testid="message-box" id="input-message" type="text" placeholder="Digite uma nova menssagem aqui" /><button data-testid="send-button">Enviar</button>
-      </form>
+
+      <div class="flex h-44 w-full">
+        <form id="form-message" class="flex justify-center items-center rounded-lg w-full">
+          <input
+            data-testid="message-box"
+            id="input-message"
+            type="text"
+            placeholder="Digite uma nova menssagem aqui"
+            class="border-2 outline-none p-3 rounded-lg w-full"
+            />
+            <button
+              data-testid="send-button"
+              class="flex bg-indigo-600 h-12 ml-3 justify-center items-center outline-none rounded-lg text-white w-12"
+            >
+            <i class="large material-icons">send</i>
+            </button>
+        </form>
+      </div>
     </section>
   </div>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="./js/chat.js"></script>
+  <script src="../js/chat.js"></script>
 </body>
 </html>

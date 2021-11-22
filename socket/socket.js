@@ -15,22 +15,24 @@ const updateUser = (obj) => {
 };
 
 const message = (chatMessage, nickname) => ({
-  message: `${moment().format('DD-MM-YYYY HH:mm:ss')} ${nickname}: ${chatMessage}`,
+  message: `${moment().format('DD-MM-YYYY HH:mm:ss')} ${nickname}
+  ${chatMessage}`,
   nickname,
-  timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
+  timestamp: moment().format('DD-MM-YYYY HH:mm:ss'),
 });
 
 const NEW_CONNETION = 'new-connection';
 
 module.exports = (io) => io.on('connection', async (socket) => {
-  socket.emit('user-nickname', setUser(socket.id.slice(1, 17)));
+  const defaultNick = `Anonymous - ${socket.id}`;
+  socket.emit('user-nickname', setUser(defaultNick.slice(0, 16)));
   
   io.emit(NEW_CONNETION, users);
 
   socket.on('message', async ({ chatMessage, nickname }) => {
     const msg = message(chatMessage, nickname);
 
-    io.emit('message', msg.message);
+    io.emit('message', msg.message, msg.nickname);
     await Model.sendMessage(msg);
   });
 

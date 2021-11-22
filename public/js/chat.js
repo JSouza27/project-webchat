@@ -31,43 +31,47 @@ dom.formNickname.addEventListener('submit', (e) => {
 
 socket.on('user-nickname', (nick) => { clientNick = nick; });
 
-socket.on('message', (msg) => {
-  const span = document.createElement('span');
-  span.innerText = msg;
-  span.setAttribute('data-testid', 'message');
+socket.on('message', (msg, nick) => {
+  const divContainer = document.createElement('div');
 
-  dom.messageContainer.appendChild(span);
+  const classAvatar = `avatar flex bg-gray-300 font-semibold
+  h-10 items-center justify-center ml-2 rounded-full text-base text-indigo-600 w-10`;
+  
+  const classContent = `bg-indigo-600 mt-2 py-2.5 px-3.5\n
+  rounded-bl-lg rounded-tl-lg rounded-br-lg shadow-md text-white w-80`;
+  
+  divContainer.className = 'conatiner-msg flex justify-end mr-3 mt-4';
+
+  divContainer.innerHTML = `
+  <div class="${classContent}">
+    <span data-testid="message">${msg}</span>
+  </div>
+  <div class="${classAvatar}">
+    <span class="font-semibold text-base">${nick.slice(0, 1).toUpperCase()}</span>
+  </div>
+  `;
+
+  dom.messageContainer.appendChild(divContainer).scrollIntoView(true);
 });
 
 socket.on('new-connection', (userList) => {
   dom.userBox.innerHTML = '';
-
+  
   userList.splice(userList.indexOf(clientNick), 1);
   userList.unshift(clientNick);
   
   userList.forEach((user) => {
-    const nick = {
-      divContainer: document.createElement('div'),
-      spanNickname: document.createElement('span'),
-      spanLetter: document.createElement('span'),
-      avatar: document.createElement('div'),
-      classes: `flex bg-gray-300 font-semibold\n
-        h-10 items-center justify-center mr-2 rounded-full text-base text-white w-10`,
-    };
+    const divContainer = document.createElement('div');
 
-    nick.avatar.setAttribute('id', 'avatar');
-    nick.avatar.className = nick.classes;
-    nick.spanLetter.innerText = user.slice(0, 1).toUpperCase();
-    nick.avatar.appendChild(nick.spanLetter);
+    const classes = `flex bg-gray-300 font-semibold\n
+      h-10 items-center justify-center mr-2 rounded-full text-base text-indigo-600 w-10`;
     
-    nick.spanNickname.innerText = user;
-    nick.spanNickname.setAttribute('data-testid', 'online-user');
-    nick.spanNickname.className = 'font-semibold text-base';
-    
-    nick.divContainer.className = 'flex my-4';
-    nick.divContainer.appendChild(nick.avatar);
-    nick.divContainer.appendChild(nick.spanNickname);
-    dom.userBox.appendChild(nick.divContainer);
+    divContainer.className = 'flex my-4';
+    divContainer.innerHTML = `<div class="avatar ${classes}">\n
+      <span>${user.slice(0, 1).toUpperCase()}</span></div>\n
+      <span data-testid="online-user" class="font-semibold text-base">${user}</span>`;
+
+    dom.userBox.appendChild(divContainer);
   });
 });
 
