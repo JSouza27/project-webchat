@@ -26,19 +26,23 @@ dom.formNickname.addEventListener('submit', (e) => {
   
   clientNick = dom.inputNickname.value;
 
-  dom.inputNickname.value = '';
+  dom.inputNickname.value = clientNick;
 });
 
-socket.on('user-nickname', (nick) => { clientNick = nick; });
+socket.on('user-nickname', (nick) => {
+  clientNick = nick;
+
+  dom.inputNickname.value = clientNick;
+});
 
 socket.on('message', (msg, nick) => {
   const divContainer = document.createElement('div');
 
   const classAvatar = `avatar flex bg-gray-300 font-semibold
-  h-10 items-center justify-center ml-2 rounded-full text-base text-indigo-600 w-10`;
+  h-8 items-center justify-center ml-2 rounded-full text-sm text-indigo-600 w-10 sm:h-10`;
   
   const classContent = `bg-indigo-600 mt-2 py-2.5 px-3.5\n
-  rounded-bl-lg rounded-tl-lg rounded-br-lg shadow-md text-white w-80`;
+  rounded-bl-lg rounded-tl-lg rounded-br-lg shadow-md text-white w-96`;
   
   divContainer.className = 'conatiner-msg flex justify-end mr-3 mt-4';
 
@@ -67,9 +71,14 @@ socket.on('new-connection', (userList) => {
       h-10 items-center justify-center mr-2 rounded-full text-base text-indigo-600 w-10`;
     
     divContainer.className = 'flex my-4';
-    divContainer.innerHTML = `<div class="avatar ${classes}">\n
-      <span>${user.slice(0, 1).toUpperCase()}</span></div>\n
-      <span data-testid="online-user" class="font-semibold text-base">${user}</span>`;
+    divContainer.innerHTML = `
+    <div class="avatar ${classes}">\n
+      <span>${user.slice(0, 1).toUpperCase()}</span>
+    </div>\n
+    <span data-testid="online-user" class="font-semibold text-base">
+      ${user}
+    </span>
+      `;
 
     dom.userBox.appendChild(divContainer);
   });

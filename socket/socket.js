@@ -5,7 +5,6 @@ const users = [];
 
 const setUser = (user) => {
   users.push(user);
-
   return user;
 };
 
@@ -15,8 +14,10 @@ const updateUser = (obj) => {
 };
 
 const message = (chatMessage, nickname) => ({
-  message: `${moment().format('DD-MM-YYYY HH:mm:ss')} ${nickname}
-  ${chatMessage}`,
+  message: `
+  ${moment().format('DD-MM-YYYY HH:mm:ss')} ${nickname} : 
+   ${chatMessage}
+  `,
   nickname,
   timestamp: moment().format('DD-MM-YYYY HH:mm:ss'),
 });
@@ -24,7 +25,7 @@ const message = (chatMessage, nickname) => ({
 const NEW_CONNETION = 'new-connection';
 
 module.exports = (io) => io.on('connection', async (socket) => {
-  const defaultNick = `Anonymous - ${socket.id}`;
+  const defaultNick = `Anonymous-${socket.id}`;
   socket.emit('user-nickname', setUser(defaultNick.slice(0, 16)));
   
   io.emit(NEW_CONNETION, users);
