@@ -6,7 +6,7 @@ const Model = require('./public/models/chatModel');
 
 require('dotenv').config();
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.static(`${__dirname}/public`));
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: `http://localhost:${port}`,
+    origin: `http://localhost:${PORT}`,
     methods: ['GET', 'POST'],
   },
 });
@@ -34,6 +34,6 @@ app.get('/', async (_req, res) => {
   return res.render('app.ejs', { oldMessages: messages });
 });
 
-httpServer.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+httpServer.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
