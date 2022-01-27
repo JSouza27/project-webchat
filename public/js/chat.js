@@ -10,6 +10,7 @@ const dom = {
   messageContainer: document.querySelector('#message-container'),
   userBox: document.querySelector('#user-box'),
   spanUser: document.querySelector(`#user-${clientNick}`),
+  avatarTop: document.querySelector('#avatar-top'),
 };
 
 dom.formMessage.addEventListener('submit', (e) => {
@@ -27,12 +28,14 @@ dom.formNickname.addEventListener('submit', (e) => {
   clientNick = dom.inputNickname.value;
 
   dom.inputNickname.value = clientNick;
+  dom.avatarTop.innerHTML = clientNick.slice(0, 1).toUpperCase();
 });
 
 socket.on('user-nickname', (nick) => {
   clientNick = nick;
 
   dom.inputNickname.value = clientNick;
+  dom.avatarTop.innerHTML = clientNick.slice(0, 1).toUpperCase();
 });
 
 socket.on('message', (msg, nick) => {
